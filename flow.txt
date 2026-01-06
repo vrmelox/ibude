@@ -1,0 +1,35 @@
+Users ✅
+
+- id
+- email
+- role
+- adresse
+- note globale
+- profession
+- statut [verifie, processing]
+- age_sur_ibude
+- id_proprietes
+
+propriete
+- id 
+- type [chambre, maison]
+- infos [
+    - nombre_chambre: 
+    - images []
+]
+- age_propriete
+- adresse
+- tarif
+- disponible [oui, non]
+- dispo_until
+
+
+transaction
+
+- id
+- datime
+- id_proprio
+- id_locataire
+- tarif
+- statut
+- date_arrivee_selection

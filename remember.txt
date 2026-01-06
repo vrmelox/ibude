@@ -1,0 +1,41 @@
+ibude/
+├── backend/              # Déjà existant
+│   ├── go/              # Service principal en Go
+│   ├── rust/            # Microservices en Rust
+│   └── shared/          # Code partagé entre services
+├── web/                 # Déjà existant - Frontend
+├── mobile/              # Application mobile (React Native/Flutter)
+├── ml/                  # Déjà existant - Machine Learning
+├── docker/              # Déjà existant - Dockerfiles et configs
+├── infrastructure/      # IaC et configuration
+│   ├── terraform/       # Infrastructure as Code
+│   ├── kubernetes/      # Manifests K8s
+│   └── ansible/         # Configuration management
+├── database/            # Migrations et seeds
+│   ├── migrations/      # SQL migrations
+│   └── seeds/           # Données de test
+├── monitoring/          # Observabilité
+│   ├── prometheus/      # Config Prometheus
+│   ├── grafana/         # Dashboards
+│   └── alerts/          # Règles d'alertes
+├── scripts/             # Scripts d'automatisation
+│   ├── deploy/          # Scripts de déploiement
+│   ├── backup/          # Scripts de sauvegarde
+│   └── dev/             # Scripts dev (setup, seed, etc.)
+├── docs/                # Documentation
+│   ├── api/             # Documentation API
+│   ├── architecture/    # Schémas architecture
+│   └── guides/          # Guides développement
+├── tests/               # Tests transversaux
+│   ├── e2e/             # Tests end-to-end
+│   ├── integration/     # Tests d'intégration
+│   └── load/            # Tests de charge
+├── ci-cd/               # Pipelines CI/CD
+│   ├── github/          # GitHub Actions
+│   └── jenkins/         # Jenkins pipelines
+├── configs/             # Configurations partagées
+│   ├── nginx/           # Config Nginx
+│   ├── redis/           # Config Redis
+│   └── postgres/        # Config PostgreSQL
+└── tools/               # Outils custom
+    └── cli/             # CLI pour gérer le projet

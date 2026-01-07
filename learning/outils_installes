@@ -1,0 +1,4 @@
+# Installe golang-migrate
+go install -tags 'postgres' github.com/golang-migrate/migrate/v4/cmd/migrate@latest
+pour vérifié si c'est installé : migrate -version
+//echo 'export PATH=$PATH:~/go/bin' >> ~/.bashrc

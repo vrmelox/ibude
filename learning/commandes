@@ -1,0 +1,24 @@
+migrate -path . -database "postgresql://ibude_user:ibude_password@localhost:5432/ibude_dev?sslmode=disable" up
+```
+
+**Décomposition** :
+- `-path .` → Les fichiers de migration sont dans le dossier actuel
+- `-database "..."` → URL de connexion à PostgreSQL
+  - `ibude_user:ibude_password` → Tes identifiants
+  - `localhost:5432` → Où tourne PostgreSQL
+  - `ibude_dev` → Nom de la base de données
+  - `sslmode=disable` → Pas de SSL (OK en dev local)
+- `up` → Exécuter les migrations "up" (créer)
+
+---
+
+**Ton défi** :
+1. Lance cette commande
+2. Copie-colle le résultat ici
+
+Tu devrais voir quelque chose comme :
+```
+1/u create_users (xx ms)
+
+# Ceci supprime la table, mais n'est pas recommandé en production
+migrate -path . -database "postgresql://ibude_user:ibude_password@localhost:5432/ibude_dev?sslmode=disable" down

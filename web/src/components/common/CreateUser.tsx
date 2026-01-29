@@ -4,31 +4,45 @@ import { useState } from "react"
 import { Person4, Email} from "@mui/icons-material"
 import ContactsIcon from '@mui/icons-material/Contacts';
 import AssignmentIndIcon from '@mui/icons-material/AssignmentInd';
-
+import { SendCreateUser } from "@/api/auth";
+import { useRouter } from "next/router";
+import { UserRole as UserType} from "@/types/types";
 
 export const CreateUser = () => {
-    const [userRole, SetRole] = useState("guest");
+    const router = useRouter();
+    const [userRole, SetRole] = useState<UserType>("guest");
     const [error, setError] = useState('');
     const [formData, setFromData] = useState({
-        firstname: "",
-        lastname: "",
+        nom: "",
+        prenom: "",
         email: "",
         role: userRole,
         profession: ""
     });
     const [isLoading, setIsLoading] = useState(false);
     const [success, setSuccess] = useState('');
+
     const handleSubmit = async(e: React.FormEvent) => {
-        e.preventDefault();
-        setError('');
-        setSuccess('');
+            e.preventDefault();
+            setError('');
+            setSuccess('');
+            formData.role = userRole;
+
+        setIsLoading(true);
+        try {
+            await SendCreateUser(formData);
+            setSuccess("User successfully created");
+
+        } catch (err: any) {
+            console.log("Creation failed: ", err.response?.data);
+            const errorMessage = err.response?.data;
+                setError(errorMessage);
+        }finally {
+            setIsLoading(false);
+        }
     }
-
-    setIsLoading(true);
-    
-
     const handleSelect = (event: React.ChangeEvent<HTMLSelectElement>) => {
-        SetRole(event.target.value)
+        SetRole(event.target.value as UserType)
     }
     return (
         <div className="p-4">

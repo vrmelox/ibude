@@ -1,15 +1,12 @@
+export type UserRole = "guest" | "host" | "both";
+
 export interface CreateUser {
-  id: number;
   email: string;
   nom: string;
   prenom: string;
-  role: "guest" | "host" | "both";
-  adresse: string | null;
-  profession: string | null;
-  note_globale: number;
-  statut: "verified" | "pending" | "processing";
-  created_at: Date;
-  updated_at: Date;
+  role: UserRole;
+  adresse?: string | null;
+  profession?: string | null;
 };
 
 export interface ResponseCreateUser {
@@ -17,7 +14,7 @@ export interface ResponseCreateUser {
   email: string;
   nom: string;
   prenom: string;
-  role: "guest" | "host" | "both";
+  role: UserRole;
   adresse: string | null;
   profession: string | null;
   note_globale: number;

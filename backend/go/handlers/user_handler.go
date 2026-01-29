@@ -62,6 +62,7 @@ func UpdateUser(c *gin.Context) {
 	id := c.Param("id")
 	var userUpdate models.User
 
+	// Parser le JSON
 	if err := c.ShouldBindJSON(&userUpdate); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
 			"error": "Invalid JSON",
@@ -70,6 +71,7 @@ func UpdateUser(c *gin.Context) {
 		return
 	}
 
+	// Vérifier que le user existe
 	var existingUser models.User
 	result := config.DB.First(&existingUser, id)
 	if result.Error != nil {
@@ -81,13 +83,29 @@ func UpdateUser(c *gin.Context) {
 		}
 
 		c.JSON(http.StatusInternalServerError, gin.H{
-			"error": "Database Error",
+			"error": "Database error",
 			"details": result.Error.Error(),
 		})
 		return
 	}
-	
+
+	// Mettre à jour
+	result = config.DB.Model(&existingUser).Updates(userUpdate)
+	if result.Error != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{
+			"error": "Failed to update user",
+			"details": result.Error.Error(),
+		})
+		return
+	}
+
+	// Retourner le user mis à jour
+	c.JSON(http.StatusOK, gin.H{
+		"message": "User successfully updated",
+		"user": existingUser,
+	})
 }
+
 func CreateUser(c *gin.Context) {
 	var user models.User
 

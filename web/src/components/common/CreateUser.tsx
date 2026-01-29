@@ -5,7 +5,7 @@ import { Person4, Email} from "@mui/icons-material"
 import ContactsIcon from '@mui/icons-material/Contacts';
 import AssignmentIndIcon from '@mui/icons-material/AssignmentInd';
 import { SendCreateUser } from "@/api/auth";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 import { UserRole as UserType} from "@/types/types";
 
 export const CreateUser = () => {
@@ -16,7 +16,7 @@ export const CreateUser = () => {
         nom: "",
         prenom: "",
         email: "",
-        role: userRole,
+        role: "guest",
         profession: ""
     });
     const [isLoading, setIsLoading] = useState(false);
@@ -26,13 +26,22 @@ export const CreateUser = () => {
             e.preventDefault();
             setError('');
             setSuccess('');
-            formData.role = userRole;
-
+    
         setIsLoading(true);
         try {
-            await SendCreateUser(formData);
+            await SendCreateUser({
+                ...formData,
+                role: userRole
+            });
             setSuccess("User successfully created");
-
+              setFormData({
+                nom: "",
+                prenom: "",
+                email: "",
+                role: "guest",
+                profession: ""
+            });
+            SetRole("guest");
         } catch (err: any) {
             console.log("Creation failed: ", err.response?.data);
             const errorMessage = err.response?.data;
@@ -96,8 +105,11 @@ export const CreateUser = () => {
                         <div className="relative">
                             <Email className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5"/>
                             <input
-                                type="text"
+                                type="email"
                                 id="email"
+                                name="email"
+                                value={formData.email}
+                                onChange={handleInputChange}
                                 placeholder="Votre email"
                                 required
                                 className="w-full pl-10 pr-3 py-2 border border-brand-primary rounded-md focus:outline-none focus:ring-2 focus:ring-brand-bold"
@@ -105,13 +117,13 @@ export const CreateUser = () => {
                         </div>
                     </div>
                     <div className="text-black">
-                        <label htmlFor="firstname" className="block text-sm font-medium text-gray-700 mb-1">
+                        <label htmlFor="role" className="block text-sm font-medium text-gray-700 mb-1">
                             Rôle
                         </label>
                         <div className="relative">
                             <AssignmentIndIcon className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5"/>
                             <select
-                                value={userRole}
+                                value={formData.role}
                                 onChange={handleSelect}
                                 className="w-full pl-10 pr-3 py-2 border border-brand-primary rounded-md focus:outline-none focus:ring-2 focus:ring-brand-bold"
                             >
@@ -130,17 +142,28 @@ export const CreateUser = () => {
                             <input
                                 type="text"
                                 id="profession"
+                                name="profession"
+                                value={formData.profession}
+                                onChange={handleInputChange}
                                 placeholder="Votre profession"
                                 required
                                 className="w-full pl-10 pr-3 py-2 border border-brand-primary rounded-md focus:outline-none focus:ring-2 focus:ring-brand-bold"
                             />
                         </div>
                     </div>
-                    <div className="">
-                        <button>
-
-                        </button>
+                    <div className="flex justify-end gap-3">
+                            <button
+                                onClick={handleSubmit}
+                                className="px-4 py-2 cursor-pointer bg-brand-primary hover:bg-brand-bold text-white rounded-xl transition-colors font-medium shadow-lg shadow-purple-600/20"
+                            >
+                                Confirm
+                            </button>
                     </div>
+                        {success && (
+                            <div className="bg-green-50 border border-green-100 text-green-600 text-sm p-3 rounded-xl text-center animate-in fade-in slide-in-from-top-1">
+                                {success}
+                            </div>
+                        )}
             </form>
         </div>
     )

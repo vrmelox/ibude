@@ -44,3 +44,34 @@ backend/go/
 │   └── booking_handler.go
 └── routes/
     └── routes.go           ← Définition des routes
+
+
+## Différences entre Gin.Engine et Gin.Context 
+// main.go - Créer l'Engine
+func main() {
+    r := gin.Default()              // ← gin.Engine (1x)
+    r.GET("/users", GetUsers)
+    r.Run(":8080")
+}
+
+// handlers/user_handler.go
+func GetUsers(c *gin.Context) {     // ← gin.Context (1x par requête)
+    var users []User
+    config.DB.Find(&users)
+    c.JSON(200, users)
+}
+```
+
+### Quand un client appelle `GET /users` :
+```
+1. Client → GET /users
+2. gin.Engine reçoit la requête
+3. gin.Engine cherche la route GET /users
+4. gin.Engine trouve → GetUsers
+5. gin.Engine CRÉE un gin.Context (c)
+6. gin.Engine appelle GetUsers(c)
+7. GetUsers lit c, fait le traitement
+8. GetUsers écrit la réponse dans c
+9. gin.Engine envoie la réponse au client
+10. gin.Engine DÉTRUIT le Context
+

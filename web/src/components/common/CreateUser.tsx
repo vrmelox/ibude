@@ -16,7 +16,7 @@ export const CreateUser = () => {
         nom: "",
         prenom: "",
         email: "",
-        role: userRole,
+        role: "guest",
         profession: ""
     });
     const [isLoading, setIsLoading] = useState(false);
@@ -26,13 +26,23 @@ export const CreateUser = () => {
             e.preventDefault();
             setError('');
             setSuccess('');
-            formData.role = userRole;
-
+    
         setIsLoading(true);
         try {
-            await SendCreateUser(formData);
+            await SendCreateUser({
+                ...formData,
+                role: userRole
+            });
             setSuccess("User successfully created");
+              setFormData({
+                nom: "",
+                prenom: "",
+                email: "",
+                role: "guest",
+                profession: ""
+            });
 
+            SetRole("guest");
         } catch (err: any) {
             console.log("Creation failed: ", err.response?.data);
             const errorMessage = err.response?.data;
@@ -150,6 +160,11 @@ export const CreateUser = () => {
                                 Confirm
                             </button>
                     </div>
+                        {success && (
+                            <div className="bg-green-50 border border-green-100 text-green-600 text-sm p-3 rounded-xl text-center animate-in fade-in slide-in-from-top-1">
+                                {success}
+                            </div>
+                        )}
             </form>
         </div>
     )

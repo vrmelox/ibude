@@ -10,10 +10,10 @@ import (
 
 func GetUsers(c *gin.Context) {
 	var users []models.User
-	
+
 	// Récupérer tous les users depuis la DB
 	result := config.DB.Find(&users)
-	
+
 	// Vérifier s'il y a une erreur
 	if result.Error != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{
@@ -21,7 +21,7 @@ func GetUsers(c *gin.Context) {
 		})
 		return
 	}
-	
+
 	// Retourner les users en JSON
 	c.JSON(http.StatusOK, gin.H{
 		"users": users,
@@ -33,7 +33,7 @@ func CreateUser(c *gin.Context) {
 	var user models.User
 
 	// Parser le JSON du body dans la struct user
-	if err := c.ShouldBindJSON(user); err != nil {
+	if err := c.ShouldBindJSON(&user); err != nil {  // ← Ajoute le &
 		c.JSON(http.StatusBadRequest, gin.H{
 			"error": "Invalid JSON",
 			"details": err.Error(),
@@ -50,6 +50,7 @@ func CreateUser(c *gin.Context) {
 		})
 		return
 	}
+	
 	c.JSON(http.StatusCreated, gin.H{
 		"message": "User created successfully",
 		"user": user,

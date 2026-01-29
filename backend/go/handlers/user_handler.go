@@ -36,6 +36,7 @@ func FindUserById(c *gin.Context) {
 
 	var user models.User
 	result := config.DB.Where("id = ?", id).First(&user)
+	//result := config.DB.First(&user, id)
 
     if result.Error != nil {
         if errors.Is(result.Error, gorm.ErrRecordNotFound) {
@@ -57,6 +58,36 @@ func FindUserById(c *gin.Context) {
     })
 }
 
+func UpdateUser(c *gin.Context) {
+	id := c.Param("id")
+	var userUpdate models.User
+
+	if err := c.ShouldBindJSON(&userUpdate); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"error": "Invalid JSON",
+			"details": err.Error(),
+		})
+		return
+	}
+
+	var existingUser models.User
+	result := config.DB.First(&existingUser, id)
+	if result.Error != nil {
+		if errors.Is(result.Error, gorm.ErrRecordNotFound) {
+			c.JSON(http.StatusNotFound, gin.H{
+				"error": "User not found",
+			})
+			return
+		}
+
+		c.JSON(http.StatusInternalServerError, gin.H{
+			"error": "Database Error",
+			"details": result.Error.Error(),
+		})
+		return
+	}
+	
+}
 func CreateUser(c *gin.Context) {
 	var user models.User
 

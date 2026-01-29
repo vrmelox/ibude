@@ -155,7 +155,7 @@ export const CreateUser = () => {
                     <div className="flex justify-end gap-3">
                             <button
                                 onClick={handleSubmit}
-                                className="px-4 py-2 cursor-pointer bg-[#1DD3C3] hover:bg-[#1DD3C3]/60 text-white rounded-xl transition-colors font-medium shadow-lg shadow-purple-600/20"
+                                className="px-4 py-2 cursor-pointer bg-brand-primary hover:bg-brand-bold text-white rounded-xl transition-colors font-medium shadow-lg shadow-purple-600/20"
                             >
                                 Confirm
                             </button>

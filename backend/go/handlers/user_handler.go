@@ -1,11 +1,13 @@
 package handlers
 
 import (
+	"errors"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
 	"github.com/vrmelo/ibude/config"
 	"github.com/vrmelo/ibude/models"
+	"gorm.io/gorm"
 )
 
 func GetUsers(c *gin.Context) {
@@ -27,6 +29,32 @@ func GetUsers(c *gin.Context) {
 		"users": users,
 		"count": len(users),
 	})
+}
+
+func FindUserById(c *gin.Context) {
+	id := c.Param("id")
+
+	var user models.User
+	result := config.DB.Where("id = ?", id).First(&user)
+
+    if result.Error != nil {
+        if errors.Is(result.Error, gorm.ErrRecordNotFound) {
+            c.JSON(http.StatusNotFound, gin.H{
+                "error": "User not found",
+            })
+            return
+        }
+
+        c.JSON(http.StatusInternalServerError, gin.H{
+            "error": "Database error",
+            "details": result.Error.Error(),
+        })
+        return
+    }
+
+    c.JSON(http.StatusOK, gin.H{
+        "user": user,
+    })
 }
 
 func CreateUser(c *gin.Context) {

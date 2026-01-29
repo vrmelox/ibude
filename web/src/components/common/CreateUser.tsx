@@ -96,8 +96,11 @@ export const CreateUser = () => {
                         <div className="relative">
                             <Email className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5"/>
                             <input
-                                type="text"
+                                type="email"
                                 id="email"
+                                name="email"
+                                value={formData.email}
+                                onChange={handleInputChange}
                                 placeholder="Votre email"
                                 required
                                 className="w-full pl-10 pr-3 py-2 border border-brand-primary rounded-md focus:outline-none focus:ring-2 focus:ring-brand-bold"
@@ -105,13 +108,13 @@ export const CreateUser = () => {
                         </div>
                     </div>
                     <div className="text-black">
-                        <label htmlFor="firstname" className="block text-sm font-medium text-gray-700 mb-1">
+                        <label htmlFor="role" className="block text-sm font-medium text-gray-700 mb-1">
                             Rôle
                         </label>
                         <div className="relative">
                             <AssignmentIndIcon className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5"/>
                             <select
-                                value={userRole}
+                                value={formData.role}
                                 onChange={handleSelect}
                                 className="w-full pl-10 pr-3 py-2 border border-brand-primary rounded-md focus:outline-none focus:ring-2 focus:ring-brand-bold"
                             >
@@ -130,16 +133,22 @@ export const CreateUser = () => {
                             <input
                                 type="text"
                                 id="profession"
+                                name="profession"
+                                value={formData.profession}
+                                onChange={handleInputChange}
                                 placeholder="Votre profession"
                                 required
                                 className="w-full pl-10 pr-3 py-2 border border-brand-primary rounded-md focus:outline-none focus:ring-2 focus:ring-brand-bold"
                             />
                         </div>
                     </div>
-                    <div className="">
-                        <button>
-
-                        </button>
+                    <div className="flex justify-end gap-3">
+                            <button
+                                onClick={handleSubmit}
+                                className="px-4 py-2 bg-[#1DD3C3] hover:bg-[#1DD3C3]/60 text-white rounded-xl transition-colors font-medium shadow-lg shadow-purple-600/20"
+                            >
+                                Confirm
+                            </button>
                     </div>
             </form>
         </div>

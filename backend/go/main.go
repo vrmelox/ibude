@@ -6,6 +6,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
 	"github.com/vrmelo/ibude/config"
+	"github.com/vrmelo/ibude/routes"
 )
 
 func main() {
@@ -22,11 +23,7 @@ func main() {
 	r := gin.Default()
 
 	// Route de test
-	r.GET("/ping", func(c *gin.Context) {
-		c.JSON(200, gin.H{
-			"message": "pong",
-		})
-	})
+	routes.SetupRoutes(r)
 
 	// Démarrer le serveur
 	r.Run(":8080")

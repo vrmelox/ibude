@@ -138,17 +138,19 @@ func DeleteUser(c *gin.Context) {
 	id := c.Param("id")
 	var delUser models.User
 
-	result := config.DB.Delete(&delUser, "id = ?", id)
+	//result := config.DB.Delete(&delUser, "id = ?", id)
+	result := config.DB.Where("id = ?", id).Delete(&delUser)
 	if result.Error != nil {
-		if errors.Is(result.Error, gorm.ErrRecordNotFound) {
-			c.JSON(http.StatusNotFound, gin.H{
-				"error": "User not found",
-			})
-			return
-		}
 		c.JSON(http.StatusInternalServerError, gin.H{
 			"error": "Database error",
 			"details": result.Error.Error(),
+		})
+		return
+	}
+
+	if result.RowsAffected == 0 {
+		c.JSON(http.StatusNotFound, gin.H{
+			"error": "User not found",
 		})
 		return
 	}

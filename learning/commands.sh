@@ -110,3 +110,9 @@ Pour se connecter à la BD
 ```bash
 psql -h localhost -U ibude_user -d ibude_dev
 ```
+
+## Set les CORS 
+Cela aide à autoriser les requêtes du Frontend
+cd ~/projets/ibude/backend/go
+go get -u github.com/gin-contrib/cors
+

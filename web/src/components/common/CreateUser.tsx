@@ -41,7 +41,6 @@ export const CreateUser = () => {
                 role: "guest",
                 profession: ""
             });
-
             SetRole("guest");
         } catch (err: any) {
             console.log("Creation failed: ", err.response?.data);

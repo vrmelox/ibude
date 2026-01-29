@@ -16,4 +16,5 @@ func SetupRoutes(router *gin.Engine) {
 	router.GET("/users", handlers.GetUsers)
 	router.POST("/users", handlers.CreateUser)
 	router.GET("/users/:id", handlers.FindUserById)
+	router.PUT("/users/:id", handlers.UpdateUser)
 }

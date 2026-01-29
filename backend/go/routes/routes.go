@@ -15,4 +15,5 @@ func SetupRoutes(router *gin.Engine) {
 	// Routes Users
 	router.GET("/users", handlers.GetUsers)
 	router.POST("/users", handlers.CreateUser)
+	router.GET("/users/:id", handlers.FindUserById)
 }

@@ -105,3 +105,8 @@ http POST http://localhost:8080/users email=test@ibude.com nom=Dupont
 1 Property → plusieurs PropertyImages
 1 Booking → plusieurs BookingHistory
 
+## Base de données
+Pour se connecter à la BD
+```bash
+psql -h localhost -U ibude_user -d ibude_dev
+```

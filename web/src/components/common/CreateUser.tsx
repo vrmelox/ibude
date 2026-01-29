@@ -5,7 +5,7 @@ import { Person4, Email} from "@mui/icons-material"
 import ContactsIcon from '@mui/icons-material/Contacts';
 import AssignmentIndIcon from '@mui/icons-material/AssignmentInd';
 import { SendCreateUser } from "@/api/auth";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 import { UserRole as UserType} from "@/types/types";
 
 export const CreateUser = () => {
@@ -145,7 +145,7 @@ export const CreateUser = () => {
                     <div className="flex justify-end gap-3">
                             <button
                                 onClick={handleSubmit}
-                                className="px-4 py-2 bg-[#1DD3C3] hover:bg-[#1DD3C3]/60 text-white rounded-xl transition-colors font-medium shadow-lg shadow-purple-600/20"
+                                className="px-4 py-2 cursor-pointer bg-[#1DD3C3] hover:bg-[#1DD3C3]/60 text-white rounded-xl transition-colors font-medium shadow-lg shadow-purple-600/20"
                             >
                                 Confirm
                             </button>

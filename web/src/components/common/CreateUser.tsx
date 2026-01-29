@@ -12,7 +12,7 @@ export const CreateUser = () => {
     const router = useRouter();
     const [userRole, SetRole] = useState<UserType>("guest");
     const [error, setError] = useState('');
-    const [formData, setFromData] = useState({
+    const [formData, setFormData] = useState({
         nom: "",
         prenom: "",
         email: "",
@@ -44,35 +44,45 @@ export const CreateUser = () => {
     const handleSelect = (event: React.ChangeEvent<HTMLSelectElement>) => {
         SetRole(event.target.value as UserType)
     }
+
+    const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setFormData({...formData, [event.target.name]: event.target.value})
+    }
     return (
         <div className="p-4">
             <form  className="space-y-4">
                     <div className="grid grid-cols-2 gap-4">
                         <div className="text-black">
-                            <label htmlFor="firstname" className="block text-sm font-medium text-gray-700 mb-1">
-                                Prénom
+                            <label htmlFor="nom" className="block text-sm font-medium text-gray-700 mb-1">
+                                nom
                             </label>
                             <div className="relative">
                                 <Person4 className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5"/>
                                 <input
                                     type="text"
-                                    id="firstname"
-                                    placeholder="Votre prénom"
+                                    id="nom"
+                                    name="nom"
+                                    value={formData.nom}
+                                    onChange={handleInputChange}
+                                    placeholder="Votre nom"
                                     required
                                     className="w-full pl-10 pr-3 py-2 border border-brand-primary rounded-md focus:outline-none focus:ring-2 focus:ring-brand-bold"
                                 />
                             </div>
                         </div>
                         <div className="text-black">
-                            <label htmlFor="lastname" className="block text-sm font-medium text-gray-700 mb-1">
-                                Nom
+                            <label htmlFor="prenom" className="block text-sm font-medium text-gray-700 mb-1">
+                                Prénom
                             </label>
                             <div className="relative">
                                 <Person4 className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5"/>
                                 <input
                                     type="text"
-                                    id="firstname"
-                                    placeholder="Votre nom"
+                                    id="prenom"
+                                    name="prenom"
+                                    value={formData.prenom}
+                                    onChange={handleInputChange}
+                                    placeholder="Votre prénom"
                                     required
                                     className="w-full pl-10 pr-3 py-2 border border-brand-primary rounded-md focus:outline-none focus:ring-2 focus:ring-brand-bold"
                                 />
